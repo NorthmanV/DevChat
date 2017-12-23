@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8703E6FE1FEEC52C00B80574 /* CameraVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8703E6FD1FEEC52C00B80574 /* CameraVCDelegate.swift */; };
 		8787562A1FEC382F00A2843C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878756291FEC382F00A2843C /* AppDelegate.swift */; };
 		8787562C1FEC382F00A2843C /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787562B1FEC382F00A2843C /* CameraVC.swift */; };
 		8787562F1FEC382F00A2843C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8787562D1FEC382F00A2843C /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8703E6FD1FEEC52C00B80574 /* CameraVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraVCDelegate.swift; sourceTree = "<group>"; };
 		878756261FEC382F00A2843C /* DevChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		878756291FEC382F00A2843C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8787562B1FEC382F00A2843C /* CameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraVC.swift; sourceTree = "<group>"; };
@@ -41,6 +43,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8703E6FC1FEEC4C200B80574 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				8787563B1FEC3D7400A2843C /* PhotoCaptureDelegate.swift */,
+				8703E6FD1FEEC52C00B80574 /* CameraVCDelegate.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		8787561D1FEC382F00A2843C = {
 			isa = PBXGroup;
 			children = (
@@ -60,10 +71,10 @@
 		878756281FEC382F00A2843C /* DevChat */ = {
 			isa = PBXGroup;
 			children = (
+				8703E6FC1FEEC4C200B80574 /* Protocol */,
 				878756431FEC3E0800A2843C /* View */,
 				878756421FEC3DFC00A2843C /* Model */,
 				878756411FEC3DF200A2843C /* Controller */,
-				8787563B1FEC3D7400A2843C /* PhotoCaptureDelegate.swift */,
 				878756291FEC382F00A2843C /* AppDelegate.swift */,
 				8787562D1FEC382F00A2843C /* Main.storyboard */,
 				878756301FEC382F00A2843C /* Assets.xcassets */,
@@ -173,6 +184,7 @@
 				878756401FEC3D7400A2843C /* CameraViewController.swift in Sources */,
 				8787563F1FEC3D7400A2843C /* PreviewView.swift in Sources */,
 				8787562C1FEC382F00A2843C /* CameraVC.swift in Sources */,
+				8703E6FE1FEEC52C00B80574 /* CameraVCDelegate.swift in Sources */,
 				8787562A1FEC382F00A2843C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

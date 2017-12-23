@@ -17,12 +17,78 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oQC-Ju-hBW" customClass="PreviewView" customModule="DevChat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SrK-fC-AuD">
+                                <rect key="frame" x="162.5" y="597" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="b3s-o8-44r"/>
+                                    <constraint firstAttribute="height" constant="50" id="q71-LG-BUo"/>
+                                </constraints>
+                                <state key="normal" image="createsnap_btn"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8eA-e5-Ec9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nG4-7i-o8s">
+                                <rect key="frame" x="315" y="30" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1qa-d7-SfT"/>
+                                    <constraint firstAttribute="width" constant="50" id="ehr-jg-815"/>
+                                </constraints>
+                                <state key="normal" image="camera_icon_snap"/>
+                                <connections>
+                                    <action selector="changeCameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="u3M-hV-ibI"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="caa-hZ-biI">
+                                <rect key="frame" x="254" y="607" width="101" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FnC-P5-qlf"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Photo"/>
+                                    <segment title="Video"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="toggleCaptureModeControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="QJV-49-o64"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="SrK-fC-AuD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Cwc-Nd-TlP"/>
+                            <constraint firstItem="nG4-7i-o8s" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="J8J-j9-GqA"/>
+                            <constraint firstItem="oQC-Ju-hBW" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="MfQ-oR-oI1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nG4-7i-o8s" secondAttribute="trailing" constant="10" id="PgV-CD-fbZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SrK-fC-AuD" secondAttribute="bottom" constant="20" id="Sya-Nw-lMf"/>
+                            <constraint firstItem="caa-hZ-biI" firstAttribute="centerY" secondItem="SrK-fC-AuD" secondAttribute="centerY" id="fe2-3Y-lwa"/>
+                            <constraint firstItem="oQC-Ju-hBW" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="fk9-dD-OQv"/>
+                            <constraint firstItem="oQC-Ju-hBW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fsa-2T-VVp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="caa-hZ-biI" secondAttribute="trailing" constant="20" id="nF7-B9-TEI"/>
+                            <constraint firstItem="caa-hZ-biI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="t6c-pz-1JR"/>
+                            <constraint firstItem="oQC-Ju-hBW" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ySz-12-01n"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="changeModeControl" destination="caa-hZ-biI" id="hdM-y3-lPo"/>
+                        <outlet property="myCameraButton" destination="nG4-7i-o8s" id="7Fp-Ej-8r9"/>
+                        <outlet property="myRecordButton" destination="SrK-fC-AuD" id="Ffl-3F-uB8"/>
+                        <outlet property="previewView" destination="oQC-Ju-hBW" id="nFp-IE-L2X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="camera_icon_snap" width="29" height="24"/>
+        <image name="createsnap_btn" width="30" height="30"/>
+    </resources>
 </document>

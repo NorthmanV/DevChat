@@ -8,18 +8,71 @@
 
 import UIKit
 
-class CameraVC: CameraViewController {
-
+class CameraVC: CameraViewController, CameraVCDelegate {
+    
+    @IBOutlet weak var previewView: PreviewView!
+    @IBOutlet weak var changeModeControl: UISegmentedControl!
+    @IBOutlet weak var myCameraButton: UIButton!
+    @IBOutlet weak var myRecordButton: UIButton!
+    
+    var index: Int = 0
+    
     override func viewDidLoad() {
+        _previewView = previewView
+        changeModeControl = captureModeControl
+        delegate = self
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func recordButtonPressed(_ sender: UIButton) {
+        print("toggle pressed!!!")
+        if index == 0 {
+            capturePhoto(sender)
+        } else {
+            toggleMovieRecording(sender)
+        }
+    }
+    
+    @IBAction func changeCameraButtonPressed(_ sender: UIButton) {
+        print("changeCameraButtonPressed")
+        changeCamera(sender)
+    }
+    
+    @IBAction func toggleCaptureModeControl(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            index = 0
+            print("selectedSegmentIndex == 0")
+        } else {
+            index = 1
+            print("selectedSegmentIndex == 1")
+        }
+        toggleCaptureMode(sender)
+    }
+    
+    func shouldEnableRecordUI(enable: Bool) {
+        myRecordButton.isEnabled = enable
+        print("shouldEnableRecordUI \(enable)")
+    }
+    
+    func shouldEnableCameraUI(enable: Bool) {
+        myCameraButton.isEnabled = enable
+        print("shouldEnableCameraUI \(enable)")
+    }
+    
+    func canStartRecording() {
+        print("recordingHasStarted")
+    }
+    
+    func recordingHasStarted() {
+        print("recordingHasStarted")
     }
 
-
+    
+    
+    
+    
+    
+    
+    
 }
 
