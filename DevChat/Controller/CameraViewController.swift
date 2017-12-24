@@ -932,10 +932,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 			let reason = AVCaptureSession.InterruptionReason(rawValue: reasonIntegerValue) {
 			print("Capture session was interrupted with reason \(reason)")
 			
-			var showResumeButton = false
+			//var showResumeButton = false
 			
 			if reason == .audioDeviceInUseByAnotherClient || reason == .videoDeviceInUseByAnotherClient {
-				showResumeButton = true
+				//showResumeButton = true
 			} else if reason == .videoDeviceNotAvailableWithMultipleForegroundApps {
 				// Simply fade-in a label to inform the user that the camera is unavailable.
 				cameraUnavailableLabel.alpha = 0
