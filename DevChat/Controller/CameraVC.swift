@@ -30,7 +30,6 @@ class CameraVC: CameraViewController, CameraVCDelegate {
             performSegue(withIdentifier: "LoginVC", sender: nil)
             return
         }
-        
     }
 
     @IBAction func recordButtonPressed(_ sender: UIButton) {
