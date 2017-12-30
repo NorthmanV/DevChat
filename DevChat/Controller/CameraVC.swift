@@ -76,7 +76,23 @@ class CameraVC: CameraViewController, CameraVCDelegate {
     }
 
     
+    func videoRecordingComplete(videoUrl: URL) {
+        performSegue(withIdentifier: "UsersVC", sender: ["videoUrl": videoUrl])
+    }
     
+    func videoRecordingFail() {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let usersVC = segue.destination as? UsersVC {
+            if let videoUrl = sender as? [String: URL] {
+                let url = videoUrl["videoUrl"]
+                usersVC.videoUrl = url
+            }
+        }
+    }
+
     
     
     

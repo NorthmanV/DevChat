@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseDatabase
+import FirebaseStorage
 
 class DataService {
     private static let _instance = DataService()
@@ -22,6 +23,14 @@ class DataService {
     
     var usersRef: DatabaseReference {
         return mainRef.child("users")
+    }
+    
+    var storageRef: StorageReference {
+        return Storage.storage().reference()
+    }
+    
+    var videoSrorageRef: StorageReference {
+        return storageRef.child("videos")
     }
     
     func saveUser(uid: String) {

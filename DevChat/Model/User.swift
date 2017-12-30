@@ -19,4 +19,9 @@ struct User {
     var uid: String {
         return _uid
     }
+    
+    init(uid: String, firstName: String) {
+        _uid = uid
+        _firstName = firstName
+    }
 }

@@ -793,30 +793,34 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 		if error != nil {
             print("Movie file finishing error: \(String(describing: error))")
             success = (((error! as NSError).userInfo[AVErrorRecordingSuccessfullyFinishedKey] as AnyObject).boolValue)!
+            delegate.videoRecordingFail()
 		}
 		
 		if success {
-			// Check authorization status.
-			PHPhotoLibrary.requestAuthorization { status in
-				if status == .authorized {
-					// Save the movie file to the photo library and cleanup.
-					PHPhotoLibrary.shared().performChanges({
-							let options = PHAssetResourceCreationOptions()
-							options.shouldMoveFile = true
-							let creationRequest = PHAssetCreationRequest.forAsset()
-							creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
-						}, completionHandler: { success, error in
-							if !success {
-								print("Could not save movie to photo library: \(String(describing: error))")
-							}
-							cleanUp()
-						}
-					)
-				} else {
-					cleanUp()
-				}
-			}
+            
+            delegate.videoRecordingComplete(videoUrl: outputFileURL)
+//            // Check authorization status.
+//            PHPhotoLibrary.requestAuthorization { status in
+//                if status == .authorized {
+//                    // Save the movie file to the photo library and cleanup.
+//                    PHPhotoLibrary.shared().performChanges({
+//                            let options = PHAssetResourceCreationOptions()
+//                            options.shouldMoveFile = true
+//                            let creationRequest = PHAssetCreationRequest.forAsset()
+//                            creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
+//                        }, completionHandler: { success, error in
+//                            if !success {
+//                                print("Could not save movie to photo library: \(String(describing: error))")
+//                            }
+//                            cleanUp()
+//                        }
+//                    )
+//                } else {
+//                    cleanUp()
+//                }
+//            }
 		} else {
+            delegate.videoRecordingFail()
 			cleanUp()
 		}
 		
