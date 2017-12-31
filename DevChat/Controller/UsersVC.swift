@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
+import FirebaseAuth
 
 class UsersVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -97,11 +98,10 @@ class UsersVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 } else {
                     let downloadUrl = metadata?.downloadURL()
                     print("Download URL: \(String(describing: downloadUrl))")
-                    //save this somewhere
-                    self.dismiss(animated: true, completion: nil)
+                    DataService.instance.sendMediaPullRequest(senderUID: Auth.auth().currentUser!.uid, sendingTo: self.selectedUsers, mediaUrl: downloadUrl!, textSnippet: "Test snippet")
                 }
-                
             })
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }
