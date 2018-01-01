@@ -9,6 +9,9 @@ import AVFoundation
 import Photos
 
 class PhotoCaptureProcessor: NSObject {
+    
+    var delegate: CameraVCDelegate!
+    
 	private(set) var requestedPhotoSettings: AVCapturePhotoSettings
 	
 	private let willCapturePhotoAnimation: () -> Void
@@ -21,14 +24,15 @@ class PhotoCaptureProcessor: NSObject {
 	
 	private var livePhotoCompanionMovieURL: URL?
 
-	init(with requestedPhotoSettings: AVCapturePhotoSettings,
+	init(with requestedPhotoSettings: AVCapturePhotoSettings, delegate: CameraVCDelegate, 
 	     willCapturePhotoAnimation: @escaping () -> Void,
 	     livePhotoCaptureHandler: @escaping (Bool) -> Void,
-	     completionHandler: @escaping (PhotoCaptureProcessor) -> Void) {
+         completionHandler: @escaping (PhotoCaptureProcessor) -> Void) {
 		self.requestedPhotoSettings = requestedPhotoSettings
 		self.willCapturePhotoAnimation = willCapturePhotoAnimation
 		self.livePhotoCaptureHandler = livePhotoCaptureHandler
 		self.completionHandler = completionHandler
+        self.delegate = delegate
 	}
 	
 	private func didFinish() {
@@ -83,6 +87,7 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
+        
         if let error = error {
             print("Error capturing photo: \(error)")
             didFinish()
@@ -97,27 +102,30 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
         
         PHPhotoLibrary.requestAuthorization { status in
             if status == .authorized {
-                PHPhotoLibrary.shared().performChanges({
-                    let options = PHAssetResourceCreationOptions()
-                    let creationRequest = PHAssetCreationRequest.forAsset()
-                    options.uniformTypeIdentifier = self.requestedPhotoSettings.processedFileType.map { $0.rawValue }
-                    creationRequest.addResource(with: .photo, data: photoData, options: options)
-                    
-                    if let livePhotoCompanionMovieURL = self.livePhotoCompanionMovieURL {
-                        let livePhotoCompanionMovieFileResourceOptions = PHAssetResourceCreationOptions()
-                        livePhotoCompanionMovieFileResourceOptions.shouldMoveFile = true
-                        creationRequest.addResource(with: .pairedVideo, fileURL: livePhotoCompanionMovieURL, options: livePhotoCompanionMovieFileResourceOptions)
-                    }
-                    
-                    }, completionHandler: { _, error in
-                        if let error = error {
-                            print("Error occurered while saving photo to photo library: \(error)")
-                        }
-                        
-                        self.didFinish()
-                    }
-                )
+                self.delegate.snapshotTaken!(snapshotData: photoData)
+
+//                PHPhotoLibrary.shared().performChanges({
+//                    let options = PHAssetResourceCreationOptions()
+//                    let creationRequest = PHAssetCreationRequest.forAsset()
+//                    options.uniformTypeIdentifier = self.requestedPhotoSettings.processedFileType.map { $0.rawValue }
+//                    creationRequest.addResource(with: .photo, data: photoData, options: options)
+//
+//                    if let livePhotoCompanionMovieURL = self.livePhotoCompanionMovieURL {
+//                        let livePhotoCompanionMovieFileResourceOptions = PHAssetResourceCreationOptions()
+//                        livePhotoCompanionMovieFileResourceOptions.shouldMoveFile = true
+//                        creationRequest.addResource(with: .pairedVideo, fileURL: livePhotoCompanionMovieURL, options: livePhotoCompanionMovieFileResourceOptions)
+//                    }
+//
+//                    }, completionHandler: { _, error in
+//                        if let error = error {
+//                            print("Error occurered while saving photo to photo library: \(error)")
+//                        }
+//
+//                        self.didFinish()
+//                    }
+//                )
             } else {
+                self.delegate.snapshotFailed!()
                 self.didFinish()
             }
         }

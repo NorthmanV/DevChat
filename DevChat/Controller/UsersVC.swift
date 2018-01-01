@@ -18,6 +18,8 @@ class UsersVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private var users = [User]()
     private var selectedUsers = [String: User]()
     private var _videoUrl: URL?
+    private var _snapData: Data?
+
     
     var videoUrl: URL? {
         set {
@@ -27,6 +29,16 @@ class UsersVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return _videoUrl
         }
     }
+    
+    var snapData: Data? {
+        set {
+            _snapData = newValue
+        }
+        get {
+            return _snapData
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,13 +104,25 @@ class UsersVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if let url = _videoUrl {
             let videoName = "\(UUID().uuidString)\(url))"
             let ref = DataService.instance.videoSrorageRef.child(videoName)
-            _ = ref.putFile(from: url, metadata: nil, completion: { (metadata, error) in
+            ref.putFile(from: url, metadata: nil, completion: { (metadata, error) in
                 if error != nil {
                     print("Error uploading video: \(error.debugDescription)")
                 } else {
                     let downloadUrl = metadata?.downloadURL()
                     print("Download URL: \(String(describing: downloadUrl))")
                     DataService.instance.sendMediaPullRequest(senderUID: Auth.auth().currentUser!.uid, sendingTo: self.selectedUsers, mediaUrl: downloadUrl!, textSnippet: "Test snippet")
+                }
+            })
+            self.dismiss(animated: true, completion: nil)
+        } else if let snap = _snapData {
+            let ref = DataService.instance.imageStorageRef.child("\(UUID().uuidString).jpg")
+            ref.putData(snap, metadata: StorageMetadata(), completion: { (metadata, error) in
+                if error != nil {
+                    print("Error uploading image: \(error.debugDescription)")
+                } else {
+                    let downloadUrl = metadata!.downloadURL()
+                    print("Download URL: \(String(describing: downloadUrl))")
+                    DataService.instance.sendMediaPullRequest(senderUID: Auth.auth().currentUser!.uid, sendingTo: self.selectedUsers, mediaUrl: downloadUrl!, textSnippet: nil)
                 }
             })
             self.dismiss(animated: true, completion: nil)

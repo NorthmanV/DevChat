@@ -33,6 +33,10 @@ class DataService {
         return storageRef.child("videos")
     }
     
+    var imageStorageRef: StorageReference {
+        return storageRef.child("images")
+    }
+    
     func saveUser(uid: String) {
         let profile = ["firstName": "", "lastName": ""]
         mainRef.child("users").child(uid).child("profile").setValue(profile)
@@ -44,7 +48,7 @@ class DataService {
             uids.append(uid)
         }
         
-        let pr: [String: AnyObject] = ["mediaURL":mediaUrl.absoluteString as AnyObject, "userID": senderUID as AnyObject,"openCount": 0 as AnyObject, "recipients": uids as AnyObject]
+        let pr: [String: AnyObject] = ["mediaURL": mediaUrl.absoluteString as AnyObject, "userID": senderUID as AnyObject,"openCount": 0 as AnyObject, "recipients": uids as AnyObject]
         
         mainRef.child("pullRequests").childByAutoId().setValue(pr)
     }

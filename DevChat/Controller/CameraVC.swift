@@ -84,11 +84,21 @@ class CameraVC: CameraViewController, CameraVCDelegate {
         
     }
     
+    func snapshotTaken(snapshotData: Data) {
+        performSegue(withIdentifier: "UsersVC", sender: ["snapshotData": snapshotData])
+    }
+    
+    func snapshotFailed() {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let usersVC = segue.destination as? UsersVC {
             if let videoUrl = sender as? [String: URL] {
                 let url = videoUrl["videoUrl"]
                 usersVC.videoUrl = url
+            } else if let snapData = sender as? [String: Data] {
+                usersVC.snapData = snapData["snapshotData"]
             }
         }
     }

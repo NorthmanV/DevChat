@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol CameraVCDelegate {
-    func shouldEnableRecordUI(enable: Bool)
-    func shouldEnableCameraUI(enable: Bool)
-    func canStartRecording()
-    func recordingHasStarted()
-    func videoRecordingComplete(videoUrl: URL)
-    func videoRecordingFail()
-//    func snapshotTaken(snapshot: Data)
-//    func snapshotFailed()
+@objc protocol CameraVCDelegate {
+    @objc optional func shouldEnableRecordUI(enable: Bool)
+    @objc optional func shouldEnableCameraUI(enable: Bool)
+    @objc optional func canStartRecording()
+    @objc optional func recordingHasStarted()
+    @objc optional func videoRecordingComplete(videoUrl: URL)
+    @objc optional func videoRecordingFail()
+    @objc optional func snapshotTaken(snapshotData: Data)
+    @objc optional func snapshotFailed()
 }
